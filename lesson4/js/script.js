@@ -3,30 +3,31 @@ function sum(a){
 	for(i=0; i<a.length; i++){
 		res+=a[i];
 	}
-	alert(res);
+	return res
+	
 }
-sum([1, 5, 3]);
+alert (sum([1, 5, 3]));
 
 function findIndexOf(arr, val){
 	for(i=0; i<arr.length; i++){
 		if(arr[i] == val){
-		  alert (i);
+		  return i;
 		}
 	    else continue;
 	   }
 	}
-findIndexOf([1,2,3,4], 4);
+alert(findIndexOf([1,2,3,4], 4));
 
-function addMassive(arr1, arr2){
+function createNewArray(arr1, arr2){
 	let arrNew=[];
 	for(i=0; i<arr1.length; i++){
-		arrNew.push(arr1[i]);
+		 arrNew.push(arr1[i]);
 	}
 	for(i=0; i<arr2.length; i++){
 		arrNew.push(arr2[i]);
 	}
-	console.log(arrNew);
+	return arrNew;
 }
-addMassive([1,5,3], [4,5,9,1]);
+console.log (createNewArray([1,5,3], [4,5,9,1]));
 
 
