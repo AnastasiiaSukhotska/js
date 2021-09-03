@@ -28,54 +28,55 @@ function showResult(a, b){
 let str='Лето в стране настало, <br> Вереск опять цветет. <br> Но некому готовить <br> Вересковый мед';
 showResult(counterForSpace(str), counterForBr(str));
 
- let newStr = 'кошка родила пятерых котят вчера котят вечером';
+ let newStr = 'мама папа кот маша кот собака кот дом';
  function textGenerator(a){
  	let wordsArray = a.split(' ');
- 	let word;
- 	let j;
+  	let j;
  	let randomStr='';
  	for(i=0; i<wordsArray.length; i++){
  		j=Math.round(Math.random()*(wordsArray.length-1));
- 		return randomStr+=wordsArray[j]+' ';	
+ 		randomStr+=wordsArray[j]+' ';	
  	}
- 	console.log(randomStr);
+ 	return randomStr;
  }
- textGenerator(newStr);
+ 
+ console.log(textGenerator(newStr));
 
 function creatorStr(a){
 	let symbol;
 	let symbolStr='';
 	for (i=0; i<a; i++){
 		symbol=String.fromCharCode(Math.round(Math.random()*57+65));
-		return symbolStr+=symbol;
+		symbolStr+=symbol;
 	}
-	alert(symbolStr);
+	return symbolStr;
 }
-creatorStr(5);
-
-
+alert(creatorStr(5));
 
  function findAllIndexes(a, b){
  	let arrayOfIndexes=[];
  	let newArray=a.split(' ');
-
  	for(i=0;i<newArray.length;i++){
  		if(newArray[i]==b){
  			arrayOfIndexes[arrayOfIndexes.length]=i;
  		}
  	}
- 	console.log(arrayOfIndexes);
+ 	return arrayOfIndexes;
  }
- findAllIndexes(newStr, 'котят');
+ console.log(findAllIndexes(newStr, 'кот'));
 
- let tasksNames = [];
- function addNames(a){
- 	for (i=0; i<tasksNames.length; i++){
- 		if (a<tasksNames[i]){
- 			return -1;
- 		}
- 		else if (a>tasksNames[i]){
- 			return 1;
- 		}
- 	}
+ function rightOrder(a, b){
+    for(i=0; i<a.length; i++){
+    	if(a[i].localeCompare(b)>0){
+    		a.splice(i,0,b);
+    		return a;
+    	}
+    }
+    a.push(b);
  }
+ let titles = [];
+ rightOrder(titles, 'арбуз');
+ rightOrder(titles, 'маша');
+ rightOrder(titles, 'даша');
+
+ console.log(titles);
