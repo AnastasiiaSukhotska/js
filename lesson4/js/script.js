@@ -6,17 +6,16 @@ function sum(a){
 	return res
 	
 }
-alert (sum([1, 5, 3]));
+alert (sum([20, 54, 31, 49]));
 
 function findIndexOf(arr, val){
 	for(i=0; i<arr.length; i++){
 		if(arr[i] == val){
 		  return i;
 		}
-	    else continue;
 	   }
 	}
-alert(findIndexOf([1,2,3,4], 4));
+alert(findIndexOf([1,2,3,4], 2));
 
 function createNewArray(arr1, arr2){
 	let arrNew=[];
