@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.area{
+			width: 800px;
+
+		}
+		.text{
+			display: none;
+		}
+
+		.selected{
+			display: flex;
+		}
+
+		table{
+			border: 2px solid black;
+		}
+		td{
+			width: 40px;
+			height: 40px;
+			border: 2px solid black;
+			margin: 0;
+			padding: 0;
+		}
+				.active-btn{
+			background-color: red;
+		}
+		.chosen{
+			background-color: red;
+		}
+
+		.animation-area{
+			margin: 0 auto;
+			width: 120px;
+			height: 120px;
+			position: relative;
+		}
+
+		.animation-element{
+			border-radius: 50%;
+			height: 20px;
+			width: 20px;
+			position: absolute;
+		}
+
+		.animation-top{
+			background-color: red;
+			top: 10px;
+			left: 50px;
+		}
+
+		.animation-bottom{
+			background-color: blue;
+			bottom: 10px;
+			left: 50px;
+		}
+
+		.animation-left{
+			background-color: yellow;
+			top: 50px;
+			left: 10px;
+		}
+
+		.animation-right{
+			background-color: green;
+			top: 50px;
+			right: 10px;
+		}
+
+		.animation-top-right{
+			background-color: pink;
+			top: 22px;
+			right: 20px;
+		}
+		.animation-top-left{
+			background-color: orange;
+			top: 22px;
+			left: 20px;
+		}
+		.animation-bottom-right{
+			background-color: grey;
+			bottom: 22px;
+			right: 20px;
+		}
+		.animation-bottom-left{
+			background-color: yellowgreen;
+			bottom: 22px;
+			left: 20px;
+		}
+
+
+	</style>
+	<script>
+		let oldSelected;
+		let oldActiveButton;
+		let activeButton;
+		function addClass(e){
+			if(!e.target.matches(".button")) return;
+			activeButton=e.target;
+			activeButton.classList.add("active-btn");
+			let selector = e.target.dataset.target;
+			document.querySelector(selector).classList.add("selected");
+			if(oldSelected)document.querySelector(oldSelected).classList.remove("selected");
+			if (oldActiveButton) oldActiveButton.classList.remove("active-btn");
+			oldSelected=selector;
+			oldActiveButton=activeButton;
+		}
+
+		document.addEventListener("DOMContentLoaded", function(e){
+			document.querySelector('.button-area').addEventListener('click', addClass);
+		});
+
+		let table;
+		let tr;
+		let selectedTd;
+		function checkCell(e){
+			for(let row of table.rows){
+				for (let cell of row.cells){
+					if (cell !=e.target&&e.target.matches('td')){
+						cell.classList.remove('chosen');
+						e.target.classList.add('chosen');
+						selectedTd=e.target;
+
+					}
+				}
+			}
+		}
+
+		function moveTd(e){                          
+				    if(e.key=="ArrowLeft" && (selectedTd.cellIndex>0)){
+				    	selectedTd.classList.remove('chosen');
+				    	selectedTd=table.rows[selectedTd.parentNode.rowIndex].cells[selectedTd.cellIndex-1];
+				    	selectedTd.classList.add('chosen');
+					}
+					else if(e.key=="ArrowRight"&&selectedTd.cellIndex<tr.children.length-1){
+						selectedTd.classList.remove('chosen');
+						selectedTd=table.rows[selectedTd.parentNode.rowIndex].cells[selectedTd.cellIndex+1];
+						selectedTd.classList.add('chosen');
+					}
+					else if(e.key=="ArrowUp"&&selectedTd.parentNode.rowIndex>0){
+						selectedTd.classList.remove('chosen');
+						selectedTd=table.rows[selectedTd.parentNode.rowIndex-1].cells[selectedTd.cellIndex];
+						selectedTd.classList.add('chosen');					}
+					else if(e.key=="ArrowDown"&&selectedTd.parentNode.rowIndex<table.rows.length-1){
+						selectedTd.classList.remove('chosen');
+						selectedTd=table.rows[selectedTd.parentNode.rowIndex+1].cells[selectedTd.cellIndex];
+						selectedTd.classList.add('chosen');					
+					}
+								
+		}
+
+	
+		document.addEventListener("DOMContentLoaded", function(e){
+			table=document.querySelector(".table");
+			tr=document.querySelector('tr');
+			document.querySelector('.table').addEventListener('click', checkCell);
+			document.addEventListener('keydown', moveTd);
+		});
+		let animation;
+		let angle=0;
+		document.addEventListener("DOMContentLoaded", function(e){
+    		animation=document.querySelector(".animation-area");
+			let preloader= setInterval(function(){
+				animation.style.transform='rotate('+angle+'deg)';
+				angle+=5;
+			}, 30);
+			window.addEventListener("load", function(){
+				clearInterval(preloader);
+				animation.style.display='none';
+			})
+		});
+
+	</script>
+</head>
+<body>
+<div class="area">
+	<div class="button-area">
+		<button class="button" data-target=".t1">one</button>
+		<button class="button" data-target=".t2">two</button>
+		<button class="button" data-target=".t3">three</button>
+		<button class="button" data-target=".t4">four</button>
+</div>
+<div class="text-area">
+	<div class="text t1">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam dolor rem excepturi maxime eum ipsa aspernatur, quod esse fuga quaerat, nobis ab doloremque omnis odit et similique consectetur sit architecto, sapiente eligendi illum id labore quasi, perspiciatis hic? Maiores, consequuntur?</div>
+	<div class="text t2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet illo, exercitationem maiores, tempore at enim voluptates quos non provident eius, repudiandae quisquam deserunt ad ex quis modi. Totam, libero? Modi!</div>
+	<div class="text t3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, sunt! Magnam iure labore veniam deleniti quas optio eos aspernatur eaque ipsa aliquam quo suscipit consectetur perferendis, qui sapiente fugiat quidem obcaecati blanditiis. Animi fugiat modi, veritatis mollitia enim corrupti quisquam.</div>
+	<div class="text t4">Lorem ipsum, dolor sit amet consectetur, adipisicing elit. Eligendi expedita, ut reiciendis, excepturi saepe accusamus soluta libero voluptate doloremque sed, ipsum illum dignissimos a ea incidunt hic rem facilis aliquam accusantium. Distinctio voluptatem aspernatur fugiat placeat saepe sequi deserunt, quibusdam?</div>
+	</div>
+</div>	
+	<div>
+		<table class="table">
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				    <td></td>
+				</tr>
+				<tr>
+				    <td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+				    <td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>	
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>		
+			</tbody>
+		</table>
+	</div>
+	<div class="animation-area">
+      	<div class="animation-element animation-top"></div>
+      	<div class="animation-element animation-left"></div>
+      	<div class="animation-element animation-right"></div>
+      	<div class="animation-element animation-bottom"></div>
+      	<div class="animation-element animation-top-left"></div>
+      	<div class="animation-element animation-top-right"></div>
+      	<div class="animation-element animation-bottom-right"></div>
+      	<div class="animation-element animation-bottom-left"></div>
+	</div>
+	<div>
+		<img src="https://drasler.ru/wp-content/uploads/2019/05/%D0%9F%D0%B8%D0%BE%D0%BD%D1%8B-%D1%84%D0%BE%D0%BD-%D0%B4%D0%BB%D1%8F-%D1%80%D0%B0%D0%B1%D0%BE%D1%87%D0%B5%D0%B3%D0%BE-%D1%81%D1%82%D0%BE%D0%BB%D0%B0-%D1%81%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C-%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE-1.jpg" alt="">
+		<img src="https://drasler.ru/wp-content/uploads/2019/05/%D0%9F%D0%B8%D0%BE%D0%BD%D1%8B-%D1%84%D0%BE%D0%BD-%D0%B4%D0%BB%D1%8F-%D1%80%D0%B0%D0%B1%D0%BE%D1%87%D0%B5%D0%B3%D0%BE-%D1%81%D1%82%D0%BE%D0%BB%D0%B0-%D1%81%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C-%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE-3.jpg" alt="">
+	</div>
+</div>
+</body>
+</html>
